@@ -13,9 +13,10 @@ import multerConfig from '@config/multer';
 
 const app = express();
 app.use(cors());
+app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
-app.use('/files', express.static(multerConfig.uploadFolder));
 app.use(router);
+app.use('/files', express.static(multerConfig.uploadFolder));
 
 app.use((error: Error, request: Request, response: Response, _: NextFunction) => {
     console.log(error);

@@ -2,7 +2,7 @@ import path from 'path';
 import crypto from 'crypto';
 import multer from 'multer'
 
-const tmpFolder = path.resolve(__dirname, '..', '..', 'tmp');
+const tmpFolder = process.env.NODE_ENV === 'production' ? path.resolve('/tmp') : path.resolve(__dirname, '..', '..', 'tmp');
 
 export default {
   tmpFolder,

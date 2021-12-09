@@ -78,6 +78,7 @@ create table post_comments (
 	id uuid not null default uuid_generate_v4() primary key,
 	post_id uuid not null references posts(id),
 	user_id uuid not null references users(id),
+	content varchar not null,
 	created_at timestamp not null default now(),
 	updated_at timestamp not null default now()
 );
