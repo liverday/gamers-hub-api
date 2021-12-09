@@ -1,0 +1,45 @@
+import { sign } from 'jsonwebtoken';
+import { compare } from 'bcrypt'
+import { plainToClass } from 'class-transformer';
+import { inject, injectable } from 'tsyringe';
+
+import User from '@modules/users/model/user';
+import AppError from '@errors/app-error';
+import CreateSessionDTO from '@modules/users/dtos/create-session.dto';
+import UsersRepository from '@modules/users/repositories/users-repository';
+
+interface Response {
+    user: User,
+    token: string;
+}
+
+@injectable()
+export default class CreateSessionService {
+    constructor(
+        @inject('UsersRepository') private usersRepository: UsersRepository
+    ) {
+    }
+
+    async execute({ userNameOrEmail, password }: CreateSessionDTO): Promise<Response> {
+        const userFoundByNameOrEmail = await this.usersRepository.findByUserNameOrEmail(userNameOrEmail);
+
+        if (!userFoundByNameOrEmail) {
+            throw new AppError(404, 'As credenciais enviadas estão incorretas')
+        }
+
+        const isSamePassword = await compare(password, userFoundByNameOrEmail.password);
+
+        if (!isSamePassword) {
+            throw new AppError(404, 'As credenciais enviadas estão incorretas')
+        }
+
+        const token = sign({}, process.env.JWT_SECRET as string, {
+            subject: userFoundByNameOrEmail.id,
+        });
+
+        return {
+            token,
+            user: plainToClass(User, userFoundByNameOrEmail)
+        }
+    }
+}
