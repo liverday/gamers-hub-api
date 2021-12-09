@@ -266,7 +266,7 @@ Status 200 OK
 - [Docker Compose](https://docs.docker.com/compose/)
 - [NodeJS](https://nodejs.org)
 
-<h2 id="instalando-as-dependencias">
+<h2 id="instalando-as-dependencias">Instalando as dependências</h2>
 
 Dentro da raiz do projeto, execute o comando `yarn install`
 
