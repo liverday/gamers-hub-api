@@ -10,5 +10,6 @@ const postsController = new PostsController();
 router.use(ensureAuthenticated)
 
 router.post('/', postsController.create);
+router.get('/', postsController.index)
 
 export default router;

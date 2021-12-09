@@ -17,6 +17,10 @@ export default class Post {
     @OneToMany(() => PostComment, comment => comment.post, {
         eager: true
     })
+    @JoinColumn({
+        name: 'id',
+        referencedColumnName: 'post_id'
+    })
     comments: PostComment[];
 
     @Column()

@@ -8,6 +8,10 @@ export default class PostComment {
     id: string;
 
     @ManyToOne(() => Post, post => post.comments)
+    @JoinColumn({
+        name: 'post_id',
+        referencedColumnName: 'id'
+    })
     post: Post;
 
     @OneToOne(() => User)
