@@ -1,6 +1,5 @@
 import { sign } from 'jsonwebtoken';
-import { compare } from 'bcrypt'
-import { plainToClass } from 'class-transformer';
+import { compare } from 'bcryptjs'
 import { inject, injectable } from 'tsyringe';
 
 import User from '@modules/users/model/user';
@@ -40,7 +39,7 @@ export default class CreateSessionService {
 
         return {
             token,
-            user: plainToClass(User, userFoundByNameOrEmail)
+            user: userFoundByNameOrEmail
         }
     }
 }

@@ -1,4 +1,5 @@
 import Post from '@modules/posts/model/post';
+import { Exclude } from 'class-transformer';
 import { Entity, Column, CreateDateColumn, UpdateDateColumn, PrimaryGeneratedColumn, ManyToMany, JoinTable } from 'typeorm';
 
 @Entity('files')
@@ -12,6 +13,7 @@ export default class File {
     fileName: string;
 
     @Column()
+    @Exclude()
     path: string;
 
     @CreateDateColumn({ name: 'created_at' })

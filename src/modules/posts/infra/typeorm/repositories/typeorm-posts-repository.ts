@@ -1,4 +1,4 @@
-import createPostDto from '@modules/posts/dto/create-post.dto';
+import CreatePostDTO from '@modules/posts/dto/create-post.dto';
 import Post from '@modules/posts/model/post';
 import PostsRepository from '@modules/posts/repositories/posts-repository';
 import { Repository, getRepository } from 'typeorm';
@@ -9,11 +9,12 @@ export default class TypeOrmPostsRepository implements PostsRepository {
         this.repository = getRepository(Post)
     }
 
-    create({ title, content, files }: createPostDto): Promise<Post> {
+    create({ user, title, content, files }: CreatePostDTO): Promise<Post> {
         const post = this.repository.create({
             title,
             content,
-            filesIds: files
+            files,
+            user
         })
 
         return this.repository.save(post)

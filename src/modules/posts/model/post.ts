@@ -1,7 +1,7 @@
 import User from '@modules/users/model/user';
 import PostComment from './post-comment';
 import File from '@modules/files/model/file'
-import { Entity, Column, CreateDateColumn, UpdateDateColumn, PrimaryGeneratedColumn, ManyToOne, OneToMany, ManyToMany, JoinTable, RelationId } from 'typeorm';
+import { Entity, Column, CreateDateColumn, UpdateDateColumn, PrimaryGeneratedColumn, ManyToOne, OneToMany, ManyToMany, JoinTable, RelationId, JoinColumn } from 'typeorm';
 
 @Entity('posts')
 export default class Post {
@@ -11,6 +11,7 @@ export default class Post {
     @ManyToOne(() => User, user => user.posts, {
         eager: true
     })
+    @JoinColumn({ name: 'user_id' })
     user: User;
 
     @OneToMany(() => PostComment, comment => comment.post, {
@@ -30,10 +31,9 @@ export default class Post {
     @UpdateDateColumn({ name: 'updated_at' })
     updatedAt: Date;
 
-    @RelationId((post: Post) => post.files)
-    filesIds: string[]
-
-    @ManyToMany(() => File, file => file.posts)
+    @ManyToMany(() => File, file => file.posts, {
+        eager: true
+    })
     @JoinTable({
         name: 'post_files',
         joinColumn: {

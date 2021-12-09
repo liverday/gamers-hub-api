@@ -8,6 +8,7 @@ export default class TypeOrmUsersRepository implements UsersRepository {
     constructor() {
         this.repository = getRepository(User)
     }
+
     async create({ 
         username, 
         email, 
@@ -52,4 +53,7 @@ export default class TypeOrmUsersRepository implements UsersRepository {
         return this.repository.find();
     }
 
+    findById(id: string): Promise<User | undefined> {
+        return this.repository.findOne(id)
+    }
 }

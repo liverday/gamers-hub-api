@@ -2,6 +2,8 @@ import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 import CreateUserDTO from '@modules/users/dtos/create-user-dto';
 import CreateUserService from '@modules/users/services/create-user.service';
+import { plainToClass } from 'class-transformer';
+import User from '@modules/users/model/user';
 
 export default class UserController {
     async create(request: Request, response: Response): Promise<Response> {
@@ -24,7 +26,7 @@ export default class UserController {
             password
         });
 
-        return response.json(user);
+        return response.json(plainToClass(User, user));
     }
 }
 

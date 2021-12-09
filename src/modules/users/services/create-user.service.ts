@@ -1,6 +1,5 @@
-import { plainToClass } from 'class-transformer';
 import { injectable, inject } from 'tsyringe';
-import { hash } from 'bcrypt';
+import { hash } from 'bcryptjs';
 
 import User from "@modules/users/model/user";
 import AppError from "@errors/app-error";
@@ -45,7 +44,7 @@ export default class CreateUserService {
         })
 
         return {
-            user: plainToClass(User, user)
+            user
         }
     }
 }

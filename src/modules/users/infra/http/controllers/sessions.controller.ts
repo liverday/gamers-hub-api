@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import { container } from 'tsyringe';
 import CreateSessionDTO from "@modules/users/dtos/create-session.dto";
 import CreateSessionService from "@modules/users/services/create-session.service";
+import { plainToClass } from "class-transformer";
+import User from "@modules/users/model/user";
 
 export default class SessionsController {
     async create(request: Request, response: Response): Promise<Response> {
@@ -16,7 +18,7 @@ export default class SessionsController {
 
         return response.json({
             token, 
-            user
+            user: plainToClass(User, user)
         })
     }
 }
