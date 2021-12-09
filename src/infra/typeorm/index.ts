@@ -1,6 +1,6 @@
 import { Connection, createConnection, getConnectionOptions } from 'typeorm';
 
-export default async (name: string = 'default'): Promise<Connection> => {
+(async (name: string = 'default'): Promise<Connection> => {
     const defaultOptions = await getConnectionOptions();
 
     return createConnection(
@@ -8,4 +8,4 @@ export default async (name: string = 'default'): Promise<Connection> => {
             name
         })
     )
-}
+})();
