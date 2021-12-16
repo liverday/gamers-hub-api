@@ -1,38 +1,24 @@
 import Post from '@modules/posts/model/post';
 import { Exclude } from 'class-transformer';
-import { Entity, Column, CreateDateColumn, UpdateDateColumn, PrimaryGeneratedColumn, ManyToMany, JoinTable } from 'typeorm';
 
-@Entity('files')
 export default class File {
-    @PrimaryGeneratedColumn('uuid')
     id: string;
-    
-    @Column({
-        name: 'file_name'
-    })
     fileName: string;
-
-    @Column()
     @Exclude()
     path: string;
-
-    @CreateDateColumn({ name: 'created_at' })
     createdAt: Date;
-
-    @UpdateDateColumn({ name: 'updated_at' })
     updatedAt: Date;
-
-    @ManyToMany(() => Post, post => post.files)
-    @JoinTable({
-        name: 'post_files',
-        joinColumn: {
-            name: 'file_id',
-            referencedColumnName: 'id'
-        },
-        inverseJoinColumn: {
-            name: 'post_id',
-            referencedColumnName: 'id'
-        }
-    })
     posts: Post[];
+
+    static create(id: string, props: Partial<File>): File {
+        const newFile = new File();
+        
+        newFile.id = id
+
+        Object.entries(props).forEach(([key, value]) => {
+            (newFile as any)[key] = value
+        })
+
+        return newFile
+    }
 }

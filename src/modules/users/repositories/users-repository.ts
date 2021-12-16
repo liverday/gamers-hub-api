@@ -1,5 +1,4 @@
 import CreateUserDTO from "../dtos/create-user-dto";
-import Gender from "../model/gender";
 import User from "../model/user";
 
 export default interface UsersRepository {
