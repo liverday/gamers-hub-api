@@ -1,6 +1,6 @@
 import { container } from 'tsyringe';
 import { Request, Response } from 'express';
-import { classToPlain, classToPlainFromExist, instanceToPlain, plainToClass } from 'class-transformer';
+import { instanceToPlain, plainToClass } from 'class-transformer';
 
 import CreatePostRequestDTO from '@modules/posts/dto/create-post-request.dto';
 import CreatePostService from '@modules/posts/services/create-post.service';
